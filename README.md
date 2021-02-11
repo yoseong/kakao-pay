@@ -7,7 +7,7 @@
 ## 패키지 구성
 **Controller, Service, Persistence** 세개의 계층으로 최상위 패키지가 구성되고, 그 하위에 **DTO, Repository, Entity** 패키지가 있습니다.
 
-![Alt text](https://raw.githubusercontent.com/yoseong/kakao-pay/master/img/pakage-hierarchy.PNG)
+![Alt text](https://raw.githubusercontent.com/yoseong/kakao-pay/master/src/main/resources/static/img/pakage-hierarchy.PNG)
 
 각 패키지의 역활은 다음과 같습니다. 
 * **Controller** : 클라이언트의 요청을 받아 Service 계층의 비즈니스 로직을 호출하고 결과를 돌려줍니다.
@@ -34,7 +34,7 @@
 
 주소는 로컬에서 실행하는 경우 http://localhost:8080/swagger-ui.html 입니다.
 
-![Alt text](https://raw.githubusercontent.com/yoseong/kakao-pay/master/img/swagger-ui.PNG)
+![Alt text](https://raw.githubusercontent.com/yoseong/kakao-pay/master/src/main/resources/static/img/swagger-ui.PNG)
 
 ### 에러 코드 및 설명
 #### 뿌리기 API
@@ -54,7 +54,7 @@
 * **302** : 다른 사용자의 뿌리기건 
 ## 유닛 테스트 
 JUnit을 사용해 유닛테스트를 작성했습니다. 코드 커버리지는 95.1% 입니다.
-![Alt text](https://raw.githubusercontent.com/yoseong/kakao-pay/master/img/code-coverage.PNG)
+![Alt text](https://raw.githubusercontent.com/yoseong/kakao-pay/master/src/main/resources/static/img/code-coverage.PNG)
 
 
 ## 기타

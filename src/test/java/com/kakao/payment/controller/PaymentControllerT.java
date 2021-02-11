@@ -99,7 +99,7 @@ public class PaymentControllerT {
 				.exchange().expectStatus().is2xxSuccessful().expectBody().jsonPath("result").isEqualTo("true");
 
 		webClient.get().uri("/api/payment/fetch").header("X-TOKEN", token).header("X-ROOM-ID", "2").header("X-USER-ID", "4")
-				.exchange().expectStatus().is4xxClientError().expectBody().jsonPath("errorCode").isEqualTo("205");
+				.exchange().expectStatus().is4xxClientError().expectBody().jsonPath("errorCode").isEqualTo("206");
 
 		paymentRepository.deleteByToken(token);
 	}

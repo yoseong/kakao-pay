@@ -114,7 +114,7 @@ public class PaymentService {
 
 		// 모두 할당됨
 		if (distribution == null) {
-			return new ApiErrorResponse(205, "Already consumed", HttpStatus.NOT_FOUND);
+			return new ApiErrorResponse(206, "Already consumed", HttpStatus.NOT_FOUND);
 		}
 
 		// 유저에게 할당됨
@@ -157,8 +157,8 @@ public class PaymentService {
 
 		char[] c = new char[3];
 		for (int i = 0; i < 3; i++) {
-			int type = rand.nextInt() % 3; // 0 : number, 1 : alphabet
-			if (type == 0) {
+			int range = rand.nextInt() % 36; // 1~10 : 숫자, 11~36 : 알파벳   
+			if (range >=0 && range <=10) {
 				c[i] = (char) (rand.nextInt(10) + '0');
 			} else {
 				c[i] = (char) (rand.nextInt(26) + 'a');

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kakao.payment.controller.dto.request.PaymentCreationRequest;
 import com.kakao.payment.persistence.entity.Payment;
@@ -74,38 +75,31 @@ public class PaymentControllerT {
 		String token = resultText.substring(startIdx + 8, startIdx + 11);
 
 		// 잘못된 토큰
-		webClient.get().uri(uriBuilder -> uriBuilder.path("/api/payment/fetch").queryParam("token", "-13").build())
-				.header("X-ROOM-ID", "2").header("X-USER-ID", "1").exchange().expectStatus().is4xxClientError()
-				.expectBody().jsonPath("errorCode").isEqualTo("201");
+		webClient.get().uri("/api/payment/fetch").header("X-TOKEN", "-12").header("X-ROOM-ID", "2").header("X-USER-ID", "1")
+				.exchange().expectStatus().is4xxClientError().expectBody().jsonPath("errorCode").isEqualTo("201");
 
 		// 자기 자신은 못받음
-		webClient.get().uri(uriBuilder -> uriBuilder.path("/api/payment/fetch").queryParam("token", token).build())
-				.header("X-ROOM-ID", "2").header("X-USER-ID", "1").exchange().expectStatus().is4xxClientError()
-				.expectBody().jsonPath("errorCode").isEqualTo("202");
+		webClient.get().uri("/api/payment/fetch").header("X-TOKEN", token).header("X-ROOM-ID", "2").header("X-USER-ID", "1")
+				.exchange().expectStatus().is4xxClientError().expectBody().jsonPath("errorCode").isEqualTo("202");
 
 		// 방 번호 다르면 못받음
-		webClient.get().uri(uriBuilder -> uriBuilder.path("/api/payment/fetch").queryParam("token", token).build())
-				.header("X-ROOM-ID", "3").header("X-USER-ID", "2").exchange().expectStatus().is4xxClientError()
-				.expectBody().jsonPath("errorCode").isEqualTo("203");
+		webClient.get().uri("/api/payment/fetch").header("X-TOKEN", token).header("X-ROOM-ID", "3").header("X-USER-ID", "2")
+				.exchange().expectStatus().is4xxClientError().expectBody().jsonPath("errorCode").isEqualTo("203");
 
 		// 성공
-		webClient.get().uri(uriBuilder -> uriBuilder.path("/api/payment/fetch").queryParam("token", token).build())
-				.header("X-ROOM-ID", "2").header("X-USER-ID", "2").exchange().expectStatus().is2xxSuccessful()
-				.expectBody().jsonPath("result").isEqualTo("true");
+		webClient.get().uri("/api/payment/fetch").header("X-TOKEN", token).header("X-ROOM-ID", "2").header("X-USER-ID", "2")
+				.exchange().expectStatus().is2xxSuccessful().expectBody().jsonPath("result").isEqualTo("true");
 
 		// 한번만 받을 수 있음
-		webClient.get().uri(uriBuilder -> uriBuilder.path("/api/payment/fetch").queryParam("token", token).build())
-				.header("X-ROOM-ID", "2").header("X-USER-ID", "2").exchange().expectStatus().is4xxClientError()
-				.expectBody().jsonPath("errorCode").isEqualTo("205");
+		webClient.get().uri("/api/payment/fetch").header("X-TOKEN", token).header("X-ROOM-ID", "2").header("X-USER-ID", "2")
+				.exchange().expectStatus().is4xxClientError().expectBody().jsonPath("errorCode").isEqualTo("205");
 
 		// 모두 할당된 경우
-		webClient.get().uri(uriBuilder -> uriBuilder.path("/api/payment/fetch").queryParam("token", token).build())
-				.header("X-ROOM-ID", "2").header("X-USER-ID", "3").exchange().expectStatus().is2xxSuccessful()
-				.expectBody().jsonPath("result").isEqualTo("true");
+		webClient.get().uri("/api/payment/fetch").header("X-TOKEN", token).header("X-ROOM-ID", "2").header("X-USER-ID", "3")
+				.exchange().expectStatus().is2xxSuccessful().expectBody().jsonPath("result").isEqualTo("true");
 
-		webClient.get().uri(uriBuilder -> uriBuilder.path("/api/payment/fetch").queryParam("token", token).build())
-				.header("X-ROOM-ID", "2").header("X-USER-ID", "4").exchange().expectStatus().is4xxClientError()
-				.expectBody().jsonPath("errorCode").isEqualTo("205");
+		webClient.get().uri("/api/payment/fetch").header("X-TOKEN", token).header("X-ROOM-ID", "2").header("X-USER-ID", "4")
+				.exchange().expectStatus().is4xxClientError().expectBody().jsonPath("errorCode").isEqualTo("205");
 
 		paymentRepository.deleteByToken(token);
 	}
@@ -136,9 +130,8 @@ public class PaymentControllerT {
 		paymentRepository.save(payment);
 
 		// 시간 지나면 못받음
-		webClient.get().uri(uriBuilder -> uriBuilder.path("/api/payment/fetch").queryParam("token", token).build())
-				.header("X-ROOM-ID", "2").header("X-USER-ID", "4").exchange().expectStatus().is4xxClientError()
-				.expectBody().jsonPath("errorCode").isEqualTo("204");
+		webClient.get().uri("/api/payment/fetch").header("X-TOKEN", token).header("X-ROOM-ID", "2").header("X-USER-ID", "4")
+				.exchange().expectStatus().is4xxClientError().expectBody().jsonPath("errorCode").isEqualTo("204");
 
 		paymentRepository.delete(payment);
 	}
@@ -156,19 +149,16 @@ public class PaymentControllerT {
 		String token = resultText.substring(startIdx + 8, startIdx + 11);
 
 		// 잘못된 토큰
-		webClient.get().uri(uriBuilder -> uriBuilder.path("/api/payment").queryParam("token", "-13").build())
-				.header("X-ROOM-ID", "2").header("X-USER-ID", "1").exchange().expectStatus().is4xxClientError()
-				.expectBody().jsonPath("errorCode").isEqualTo("301");
+		webClient.get().uri("/api/payment").header("X-TOKEN", "-13").header("X-ROOM-ID", "2").header("X-USER-ID", "1")
+				.exchange().expectStatus().is4xxClientError().expectBody().jsonPath("errorCode").isEqualTo("301");
 
 		// 내꺼 아님
-		webClient.get().uri(uriBuilder -> uriBuilder.path("/api/payment").queryParam("token", token).build())
-				.header("X-ROOM-ID", "2").header("X-USER-ID", "3").exchange().expectStatus().is4xxClientError()
-				.expectBody().jsonPath("errorCode").isEqualTo("302");
+		webClient.get().uri("/api/payment").header("X-TOKEN", token).header("X-ROOM-ID", "2").header("X-USER-ID", "3")
+				.exchange().expectStatus().is4xxClientError().expectBody().jsonPath("errorCode").isEqualTo("302");
 
 		// 성공
-		webClient.get().uri(uriBuilder -> uriBuilder.path("/api/payment").queryParam("token", token).build())
-				.header("X-ROOM-ID", "2").header("X-USER-ID", "1").exchange().expectStatus().is2xxSuccessful()
-				.expectBody().jsonPath("result").isEqualTo("true");
+		webClient.get().uri("/api/payment").header("X-TOKEN", token).header("X-ROOM-ID", "2").header("X-USER-ID", "1")
+				.exchange().expectStatus().is2xxSuccessful().expectBody().jsonPath("result").isEqualTo("true");
 
 		paymentRepository.deleteByToken(token);
 

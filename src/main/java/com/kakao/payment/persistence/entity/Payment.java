@@ -5,10 +5,11 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "payment")
+@Table(name = "payment", indexes = @Index(name ="token_index", columnList = "token"))
 public class Payment {
 	@Id
 	@Column(name = "payment_id", length = 36)

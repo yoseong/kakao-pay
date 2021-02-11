@@ -19,11 +19,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @RestController
 @RequestMapping("/api/")
 public class PaymentController {
-	
+
 	@Autowired
 	private PaymentService paymentService;
 
@@ -59,23 +58,23 @@ public class PaymentController {
 
 	@GetMapping("/payment/fetch")
 	@ApiOperation(value = "뿌린 돈 받기", tags = "payment-controller")
-	public ResponseEntity<ApiResponse> fetch(@RequestHeader(value = "X-USER-ID") int xUserId,
-			@RequestHeader(value = "X-ROOM-ID") String xRoomId,
-			@RequestParam(name = "token", required = true) String token) {
+	public ResponseEntity<ApiResponse> fetch(@RequestHeader(value = "X-TOKEN", required = true) String token,
+			@RequestHeader(value = "X-USER-ID", required = true) int xUserId,
+			@RequestHeader(value = "X-ROOM-ID", required = true) String xRoomId) {
 
 		ApiResponse response = paymentService.fetch(token, xUserId, xRoomId);
-		
+
 		return new ResponseEntity<ApiResponse>(response, response.getHttpStatus());
 	}
-	
+
 	@GetMapping("/payment")
 	@ApiOperation(value = "내가 뿌린 돈 조회", tags = "payment-controller")
-	public ResponseEntity<ApiResponse> get(@RequestHeader(value = "X-USER-ID") int xUserId,
-			@RequestHeader(value = "X-ROOM-ID") String xRoomId,
-			@RequestParam(name = "token", required = true) String token) {
+	public ResponseEntity<ApiResponse> get(@RequestHeader(value = "X-TOKEN", required = true) String token,
+			@RequestHeader(value = "X-USER-ID", required = true) int xUserId,
+			@RequestHeader(value = "X-ROOM-ID", required = false) String xRoomId) {
 
 		ApiResponse response = paymentService.get(token, xUserId);
-		
+
 		return new ResponseEntity<ApiResponse>(response, response.getHttpStatus());
 	}
 }

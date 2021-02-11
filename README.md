@@ -33,6 +33,7 @@ Controller, Service, Persistence 세개의 계층으로 최상위 패키지가 �
 주소 : http://localhost:8080/swagger-ui.html (로컬에서 실행하는 경우)
 
 요구사항에 명시된 3개의 API 를 테스트 할 수 있습니다.
+
 ![Alt text](https://raw.githubusercontent.com/yoseong/kakao-pay/master/img/swagger-ui.PNG)
 
 ### 에러 코드 및 설명

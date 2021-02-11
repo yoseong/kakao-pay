@@ -15,8 +15,8 @@ public class PaymentCreationRequest {
 		return amount;
 	}
 
-	public void setAmount(int price) {
-		this.amount = price;
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
 	public int getUserCount() {

@@ -18,7 +18,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
 
         return new ApiInfoBuilder()
-                .title("카카오페이")
+                .title("카카오페이 머니 뿌리기")
                 .description("API Specification")
                 .build();
     }

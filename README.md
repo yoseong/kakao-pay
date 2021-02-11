@@ -2,7 +2,7 @@
 
 
 ## 핵심 문제해결 전략
-일반적인 REST API 서버 구조로 요구사항 구현이 가능해 Spring Boot, JPA, MySQL 등을 활용해 REST API 서버를 구현했습니다.
+일반적인 REST API 서버 구조로 요구사항 구현이 가능하다고 판단해, Spring Boot, JPA, MySQL 등을 활용해 REST API 서버를 구현했습니다.
 
 ## 패키지 구성
 **Controller, Service, Persistence** 세개의 계층으로 최상위 패키지가 구성되고, 그 하위에 **DTO, Repository, Entity** 패키지가 있습니다.
@@ -30,9 +30,9 @@
 ## API 테스트 방법
 
 ### Swagger UI
-주소 : http://localhost:8080/swagger-ui.html (로컬에서 실행하는 경우)
+프로젝트에 내장된 Swagger UI 를 사용해 요구사항에 명시된 3개의 API 를 테스트 할 수 있습니다.
 
-요구사항에 명시된 3개의 API 를 테스트 할 수 있습니다.
+주소는 로컬에서 실행하는 경우 http://localhost:8080/swagger-ui.html 입니다.
 
 ![Alt text](https://raw.githubusercontent.com/yoseong/kakao-pay/master/img/swagger-ui.PNG)
 

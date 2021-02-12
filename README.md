@@ -30,7 +30,7 @@
 ## API 테스트 방법
 
 ### Swagger UI
-프로젝트에 내장된 Swagger UI 를 사용해 요구사항에 명시된 3개의 API 명세를 확인하고 테스트 할 수 있습니다.
+내장된 Swagger UI 를 사용해 요구사항에 명시된 3개의 API 명세를 확인하고 테스트 할 수 있습니다.
 
 주소는 로컬에서 실행하는 경우 http://localhost:8080/swagger-ui.html 입니다.
 

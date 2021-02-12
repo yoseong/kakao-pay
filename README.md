@@ -2,7 +2,7 @@
 
 
 ## 핵심 문제해결 전략
-일반적인 REST API 서버 구조로 요구사항 구현이 가능하다고 판단해, Spring Boot, JPA, MySQL 등을 활용해 REST API 서버를 구현했습니다.
+일반적인 REST API 서버 구조로 요구사항 구현이 가능해, Spring Boot, JPA, MySQL 등을 활용해 REST API 서버를 구현했습니다.
 
 ## 패키지 구성
 **Controller, Service, Persistence** 세개의 계층으로 최상위 패키지가 구성되고, 그 하위에 **DTO, Repository, Entity** 패키지가 있습니다.
